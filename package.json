@@ -33,7 +33,7 @@
     "screenshots": "node scripts/docs/gen-demo-data.mjs && node scripts/docs/capture-readme-screens.mjs"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=23"
   },
   "devDependencies": {
     "js-yaml": "^4.1.0"

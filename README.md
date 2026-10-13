@@ -204,7 +204,7 @@ tests/fixtures/       sample pastes (PowerShell, cURL, fetch, HAR) and Azure pol
 
 ## Development
 
-Requires Node.js 20+ and Chrome (for smoke tests and screenshots).
+Requires Node.js 23+ (24 LTS recommended; the engine uses RegExp modifier groups like `(?i:…)`) and Chrome (for smoke tests and screenshots).
 
 ```bash
 npm install                             # dev only: js-yaml for the CRS test runner
