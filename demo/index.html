@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Example Shop – CRS Request Inspector demo</title>
+  <link rel="stylesheet" href="/static/shop.css">
+</head>
+<body>
+  <header class="top">
+    <div class="logo">◆ Example Shop</div>
+    <input class="search" id="search" value="wireless headphones" aria-label="Search">
+    <nav><a href="#">Deals</a><a href="#">Account</a><a href="#" class="cart">Cart (2)</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Sound that moves with you</h1>
+      <p>Fictitious demo shop for the <b>CRS Request Inspector</b> Chrome extension. Open DevTools → <b>OWASP CRS</b> and reload.</p>
+      <div class="actions">
+        <button id="normal">Browse normally</button>
+        <button id="attacks" class="secondary">Send attack samples</button>
+      </div>
+    </section>
+    <section class="grid" id="grid"></section>
+  </main>
+  <script src="/static/shop.js"></script>
+</body>
+</html>

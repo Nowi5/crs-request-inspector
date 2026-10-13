@@ -1,0 +1,25 @@
+CRS Request Inspector
+Copyright 2026 the CRS Request Inspector contributors
+
+This product bundles third-party software and data:
+
+* OWASP CRS (Core Rule Set) – rule files in extension/rulesets/<version>/
+  Copyright (c) 2006-2020 Trustwave and contributors; (c) 2021-2026 CRS project.
+  Licensed under the Apache License 2.0 – https://github.com/coreruleset/coreruleset
+
+* ModSecurity – modsecurity.conf-recommended (extension/rulesets/modsecurity/) and the
+  unicode.mapping code page 20127 table (extension/src/engine/unicode-map.js, generated).
+  Copyright (c) 2004-2024 Trustwave Holdings, Inc. and the OWASP ModSecurity project.
+  Licensed under the Apache License 2.0 – https://github.com/owasp-modsecurity/ModSecurity
+
+* libinjection 4.0.0 – JavaScript port in extension/src/engine/libinjection.js and
+  libinjection-data.js. Copyright (c) 2012-2016 Nick Galbreath and libinjection contributors.
+  BSD 3-Clause License – see extension/src/engine/LICENSE.libinjection
+
+* Azure WAF Default Rule Set metadata (extension/src/azure/drs-data.js) is derived from the
+  public Microsoft Learn documentation "Web Application Firewall DRS rule groups and rules"
+  (rule ids, groups, paranoia levels, severities). No Microsoft rule logic is included.
+
+The extension's own source code is licensed under the Apache License 2.0 (see LICENSE).
+"OWASP" and "ModSecurity" are trademarks of their respective owners; this project is not
+affiliated with or endorsed by OWASP, the CRS project, Trustwave or Microsoft.

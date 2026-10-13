@@ -1,0 +1,19 @@
+GET http://legacy.example.com:8080/cgi-bin/status.cgi?verbose=1 HTTP/1.0
+User-Agent: test-agent/1.0
+Accept: */*
+
+###
+:method: POST
+:authority: api.example.com
+:scheme: https
+:path: /graphql?op=search
+content-type: application/json
+x-long-header: first part
+  continued part
+accept: application/json
+
+{"query":"{ search(q: \"<img src=x onerror=alert(1)>\") { id } }"}
+---
+DELETE /api/items/42 HTTP/2
+Host: api.example.com:443
+Authorization: Bearer test-token-not-real

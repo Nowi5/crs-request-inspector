@@ -1,0 +1,57 @@
+$session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
+$session.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+$session.Cookies.Add((New-Object System.Net.Cookie("AppServiceAuthSession", "cjky+ZV4b2KyZjwmsRIuCPOLNEPOCPOLNEPO/aE7+eMJvWmwtgiaES/J0Cn+r+4RPDcsTwXRjkwSs2maLamcYuuEShOKB8BpEm==", "/", "dev.example.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("app_session", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0LXVzZXIiLCJyb2xlIjoiYWRtaW4ifQ.c2lnbmF0dXJlLXJlZGFjdGVkLWZvci10ZXN0cw", "/", "dev.example.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("app_csrf", "rvqs8QY0fdXWv8qPmqIdwB.4e0823d35aa61ac819ee1bfb708d03335efe856b1bad53806489fb06af5fd6a7", "/", "dev.example.com")))
+Invoke-WebRequest -UseBasicParsing -Uri "https://dev.example.com/api/v1/workspace-options" `
+-WebSession $session `
+-Headers @{
+"authority"="dev.example.com"
+  "method"="GET"
+  "path"="/api/v1/workspace-options"
+  "scheme"="https"
+  "accept"="*/*"
+  "accept-encoding"="gzip, deflate, br, zstd"
+  "accept-language"="en-SG,en;q=0.9,de-DE;q=0.8,de;q=0.7,en-US;q=0.6,zh-CN;q=0.5,zh;q=0.4"
+  "cache-control"="no-cache"
+  "dnt"="1"
+  "pragma"="no-cache"
+  "priority"="u=1, i"
+  "referer"="https://dev.example.com/docs/5d2c6e1a-3b7f-4c9e-9a41-2f8b7c0d1e63"
+  "sec-ch-ua"="`"Chromium`";v=`"154`", `"Google Chrome`";v=`"154`", `"Not A(Brand`";v=`"99`""
+  "sec-ch-ua-mobile"="?0"
+  "sec-ch-ua-platform"="`"Windows`""
+  "sec-fetch-dest"="empty"
+  "sec-fetch-mode"="cors"
+  "sec-fetch-site"="same-origin"
+};
+$session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
+$session.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+$session.Cookies.Add((New-Object System.Net.Cookie("AppServiceAuthSession", "cjky+ZV4b2KyZjwmsRIuCPOLNEPOCPOLNEPO/aE7+eMJvWmwtgiaES/J0Cn+r+4RPDcsTwXRjkwSs2maLamcYuuEShOKB8BpEm==", "/", "dev.example.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("app_csrf", "rvqs8QY0fdXWv8qPmqIdwB.4e0823d35aa61ac819ee1bfb708d03335efe856b1bad53806489fb06af5fd6a7", "/", "dev.example.com")))
+$session.Cookies.Add((New-Object System.Net.Cookie("app_session", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0LXVzZXIiLCJyb2xlIjoiYWRtaW4ifQ.c2lnbmF0dXJlLXJlZGFjdGVkLWZvci10ZXN0cw", "/", "dev.example.com")))
+Invoke-WebRequest -UseBasicParsing -Uri "https://dev.example.com/api/v1/docs/folders/5d2c6e1a-3b7f-4c9e-9a41-2f8b7c0d1e63/comments" `
+-Method "POST" `
+-WebSession $session `
+-Headers @{
+"authority"="dev.example.com"
+  "method"="POST"
+  "path"="/api/v1/docs/folders/5d2c6e1a-3b7f-4c9e-9a41-2f8b7c0d1e63/comments"
+  "scheme"="https"
+  "accept"="*/*"
+  "accept-encoding"="gzip, deflate, br, zstd"
+  "accept-language"="en-SG,en;q=0.9,de-DE;q=0.8,de;q=0.7,en-US;q=0.6,zh-CN;q=0.5,zh;q=0.4"
+  "dnt"="1"
+  "origin"="https://dev.example.com"
+  "priority"="u=1, i"
+  "referer"="https://dev.example.com/docs/5d2c6e1a-3b7f-4c9e-9a41-2f8b7c0d1e63"
+  "sec-ch-ua"="`"Chromium`";v=`"154`", `"Google Chrome`";v=`"154`", `"Not A(Brand`";v=`"99`""
+  "sec-ch-ua-mobile"="?0"
+  "sec-ch-ua-platform"="`"Windows`""
+  "sec-fetch-dest"="empty"
+  "sec-fetch-mode"="cors"
+  "sec-fetch-site"="same-origin"
+  "x-csrf-token"="rvqs8QY0fdXWv8qPmqIdwB.4e0823d35aa61ac819ee1bfb708d03335efe856b1bad53806489fb06af5fd6a7"
+} `
+-ContentType "application/json" `
+-Body "{`"content`":`"enc:hex1:48656c6c6f`",`"resourceItems`":[],`"linkedResourceItemIds`":[],`"sourceLinks`":[]}"

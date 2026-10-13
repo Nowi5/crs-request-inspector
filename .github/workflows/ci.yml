@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Download test data (libinjection vectors, CRS regression tests)
+        run: node scripts/fetch-test-data.mjs --crs v4.30.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Unit and integration tests
+        run: npm test
+      - name: OWASP CRS regression suite (v4.30.0)
+        run: node scripts/run-crs-tests.mjs v4.30.0 | tee crs-tests.txt
+      - name: DevTools capture smoke test
+        run: |
+          node scripts/serve.mjs 5178 &
+          sleep 1
+          CHROME="$(which google-chrome || which chromium)" node scripts/smoke-devtools.mjs
+      - name: Package extension
+        run: node scripts/package-extension.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: crs-request-inspector
+          path: dist/*.zip

@@ -1,0 +1,107 @@
+{
+  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-example/providers/Microsoft.Network/frontdoorWebApplicationFirewallPolicies/wafexampledev",
+  "type": "Microsoft.Network/frontdoorwebapplicationfirewallpolicies",
+  "name": "wafexampledev",
+  "location": "Global",
+  "sku": { "name": "Premium_AzureFrontDoor" },
+  "properties": {
+    "policySettings": {
+      "enabledState": "Enabled",
+      "mode": "Prevention",
+      "requestBodyCheck": "Enabled",
+      "customBlockResponseStatusCode": 403
+    },
+    "customRules": {
+      "rules": [
+        {
+          "name": "AllowHealthProbe",
+          "enabledState": "Enabled",
+          "priority": 10,
+          "ruleType": "MatchRule",
+          "matchConditions": [
+            { "matchVariable": "RequestUri", "operator": "BeginsWith", "negateCondition": false, "matchValue": ["/healthz"], "transforms": ["Lowercase"] }
+          ],
+          "action": "Allow"
+        },
+        {
+          "name": "BlockGeo",
+          "enabledState": "Enabled",
+          "priority": 20,
+          "ruleType": "MatchRule",
+          "matchConditions": [
+            { "matchVariable": "SocketAddr", "operator": "GeoMatch", "negateCondition": false, "matchValue": ["KP", "IR"], "transforms": [] }
+          ],
+          "action": "Block"
+        },
+        {
+          "name": "BlockAdminFromOutside",
+          "enabledState": "Enabled",
+          "priority": 30,
+          "ruleType": "MatchRule",
+          "matchConditions": [
+            { "matchVariable": "RequestUri", "operator": "Contains", "negateCondition": false, "matchValue": ["/admin"], "transforms": ["Lowercase"] },
+            { "matchVariable": "RemoteAddr", "operator": "IPMatch", "negateCondition": true, "matchValue": ["10.0.0.0/8", "203.0.113.0/24"], "transforms": [] }
+          ],
+          "action": "Block"
+        },
+        {
+          "name": "LogLargeBodies",
+          "enabledState": "Enabled",
+          "priority": 40,
+          "ruleType": "MatchRule",
+          "matchConditions": [
+            { "matchVariable": "RequestBody", "operator": "GreaterThan", "negateCondition": false, "matchValue": ["100000"], "transforms": [] }
+          ],
+          "action": "Log"
+        },
+        {
+          "name": "RateLimitLogin",
+          "enabledState": "Enabled",
+          "priority": 50,
+          "ruleType": "RateLimitRule",
+          "rateLimitDurationInMinutes": 1,
+          "rateLimitThreshold": 100,
+          "matchConditions": [
+            { "matchVariable": "RequestUri", "operator": "Contains", "negateCondition": false, "matchValue": ["/auth/"], "transforms": ["Lowercase"] }
+          ],
+          "action": "Block"
+        },
+        {
+          "name": "OldDisabledRule",
+          "enabledState": "Disabled",
+          "priority": 60,
+          "ruleType": "MatchRule",
+          "matchConditions": [{ "matchVariable": "RequestMethod", "operator": "Equal", "negateCondition": false, "matchValue": ["PUT"], "transforms": [] }],
+          "action": "Block"
+        }
+      ]
+    },
+    "managedRules": {
+      "managedRuleSets": [
+        {
+          "ruleSetType": "Microsoft_DefaultRuleSet",
+          "ruleSetVersion": "2.1",
+          "ruleSetAction": "Block",
+          "exclusions": [
+            { "matchVariable": "RequestCookieNames", "selectorMatchOperator": "Equals", "selector": "app_session" }
+          ],
+          "ruleGroupOverrides": [
+            {
+              "ruleGroupName": "SQLI",
+              "exclusions": [],
+              "rules": [
+                { "ruleId": "942100", "enabledState": "Enabled", "action": "AnomalyScoring", "exclusions": [ { "matchVariable": "RequestBodyJsonArgNames", "selectorMatchOperator": "Equals", "selector": "content" } ] },
+                { "ruleId": "942200", "enabledState": "Disabled", "action": "AnomalyScoring", "exclusions": [] }
+              ]
+            },
+            {
+              "ruleGroupName": "METHOD-ENFORCEMENT",
+              "rules": [ { "ruleId": "911100", "enabledState": "Enabled", "action": "AnomalyScoring", "exclusions": [] } ]
+            }
+          ]
+        },
+        { "ruleSetType": "Microsoft_BotManagerRuleSet", "ruleSetVersion": "1.1", "ruleGroupOverrides": [], "exclusions": [] }
+      ]
+    }
+  }
+}

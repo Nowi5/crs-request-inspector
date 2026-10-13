@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CRS Request Inspector – Installation &amp; User Guide</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 18mm; @bottom-left { content: "CRS Request Inspector – User Guide"; font: 8pt system-ui, "Segoe UI", sans-serif; color: #8a8f98; } @bottom-right { content: counter(page) " / " counter(pages); font: 8pt system-ui, "Segoe UI", sans-serif; color: #8a8f98; } }
+  @page :first { margin: 0; @bottom-left { content: none; } @bottom-right { content: none; } }
+  :root { --ink: #1d2330; --muted: #5b6372; --line: #e3e6eb; --accent: #1a73e8; --orange: #e8710a; --red: #c5221f; --green: #188038; --amber: #b06000; --soft: #f5f7fa; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font: 10pt/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink); }
+  h1, h2, h3 { line-height: 1.2; margin: 0; }
+  h2 { font-size: 17pt; margin: 0 0 4mm; padding-top: 1mm; letter-spacing: -0.01em; }
+  h2 .num { color: var(--accent); margin-right: 2.5mm; }
+  h3 { font-size: 11.5pt; margin: 6mm 0 2mm; }
+  p { margin: 0 0 2.5mm; }
+  code, .mono { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 8.8pt; }
+  code { background: var(--soft); border: 1px solid var(--line); border-radius: 3px; padding: 0 3px; }
+  .section { break-before: page; }
+  .lead { font-size: 11pt; color: var(--muted); margin-bottom: 5mm; }
+  figure { margin: 3mm 0 5mm; break-inside: avoid; }
+  figure img { display: block; width: 100%; border: 1px solid var(--line); border-radius: 6px; }
+  figcaption { font-size: 8.5pt; color: var(--muted); margin-top: 1.5mm; }
+  .crop { overflow: hidden; border: 1px solid var(--line); border-radius: 6px; }
+  .crop img { border: 0; border-radius: 0; }
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+  .steps > li { counter-increment: step; position: relative; padding-left: 10mm; margin-bottom: 4mm; break-inside: avoid; }
+  .steps > li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 6.5mm; height: 6.5mm; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 9pt; display: flex; align-items: center; justify-content: center; }
+  .steps > li > strong:first-child { display: block; font-size: 10.5pt; margin-bottom: 1mm; }
+  .callouts { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 6mm; }
+  .callouts li { position: relative; padding-left: 8mm; break-inside: avoid; }
+  .callouts li b.n { position: absolute; left: 0; top: 0.3mm; width: 5.2mm; height: 5.2mm; border-radius: 50%; background: var(--orange); color: #fff; font-size: 7.5pt; display: flex; align-items: center; justify-content: center; }
+  .callouts.single { grid-template-columns: 1fr; }
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 5mm; font-size: 9pt; break-inside: avoid; }
+  th, td { text-align: left; vertical-align: top; padding: 2mm 2.5mm; border-bottom: 1px solid var(--line); }
+  th { background: var(--soft); font-weight: 600; font-size: 8.5pt; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+  .box { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: #f7faff; border-radius: 4px; padding: 3mm 4mm; margin: 3mm 0 5mm; break-inside: avoid; }
+  .box.warn { border-left-color: var(--orange); background: #fff8f1; }
+  .box.ok { border-left-color: var(--green); background: #f3faf5; }
+  .box p:last-child { margin-bottom: 0; }
+  .pill { display: inline-block; font-size: 8pt; font-weight: 600; padding: 0.3mm 2mm; border-radius: 99px; border: 1px solid; white-space: nowrap; }
+  .pill.red { color: var(--red); border-color: #f2b8b5; background: #fce8e6; }
+  .pill.green { color: var(--green); border-color: #a8dab5; background: #e6f4ea; }
+  .pill.amber { color: var(--amber); border-color: #fbd38d; background: #fef7e0; }
+  .pill.grey { color: var(--muted); border-color: var(--line); background: var(--soft); }
+  .pl { font-weight: 700; color: var(--accent); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; align-items: start; }
+  .verdicts figure { margin: 0 0 2mm; }
+  .kbd { font: 600 8pt ui-monospace, Consolas, monospace; border: 1px solid #c9ced6; border-bottom-width: 2px; border-radius: 3px; padding: 0 1.4mm; background: #fff; }
+  .muted { color: var(--muted); }
+  .small { font-size: 8.5pt; }
+  /* cover */
+  .cover { height: 297mm; padding: 26mm 20mm 18mm; background: linear-gradient(160deg, #0f1724 0%, #1b2a44 60%, #1a3a6e 100%); color: #fff; display: flex; flex-direction: column; }
+  .cover .tag { font-size: 9pt; letter-spacing: 0.18em; text-transform: uppercase; color: #9fc2ff; margin-bottom: 6mm; }
+  .cover h1 { font-size: 34pt; letter-spacing: -0.02em; margin-bottom: 4mm; }
+  .cover .sub { font-size: 13pt; color: #c8d3e6; max-width: 150mm; margin-bottom: 10mm; }
+  .cover img { width: 100%; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.12); }
+  .cover .foot { margin-top: auto; font-size: 9pt; color: #9aa7bd; display: flex; justify-content: space-between; }
+  .toc { columns: 2; column-gap: 10mm; padding-left: 5mm; margin: 0; }
+  .toc li { margin-bottom: 1.5mm; }
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<section class="cover">
+  <div class="tag">Chrome DevTools extension · OWASP Core Rule Set</div>
+  <h1>CRS Request Inspector</h1>
+  <div class="sub">Installation &amp; user guide — see which OWASP CRS / ModSecurity WAF rules your requests would trigger, where they match, and how to read paranoia levels and anomaly scores.</div>
+  <img src="img/00-cover-dark.png" alt="CRS Request Inspector panel in dark mode">
+  <div class="foot"><span>Bundled rule sets: CRS v4.30.0 · v4.25.2 (LTS) · v3.3.10</span><span>Everything runs locally – no request data leaves your browser</span></div>
+</section>
+
+<!-- 1. Overview -->
+<section class="section">
+  <h2><span class="num">1</span>What the extension does</h2>
+  <p class="lead">A Web Application Firewall (WAF) such as ModSecurity, Coraza or Azure Application Gateway / Front Door uses the OWASP Core Rule Set (CRS) to block attacks. CRS is generic – legitimate requests (signed URLs, rich text, JSON with special characters, unusual HTTP methods) can trigger it too. This extension runs the real CRS rules against your requests <em>before</em> they hit a WAF, so you see what would be blocked, which rule fires, on which part of the request, and why.</p>
+  <table>
+    <tr><th style="width:32%">Feature</th><th>What it gives you</th></tr>
+    <tr><td><b>DevTools tab “OWASP CRS”</b></td><td>Next to <i>Network</i>. Every request of the inspected page is analysed automatically while DevTools is open.</td></tr>
+    <tr><td><b>Paste a request</b></td><td>Chrome “Copy as PowerShell / cURL / fetch”, “Copy all as …”, raw HTTP or HAR files – analysed instantly.</td></tr>
+    <tr><td><b>Verdict + paranoia matrix</b></td><td>Blocked / passes at your configured paranoia level, and the score at PL1–PL4 (“would start blocking at PL2”).</td></tr>
+    <tr><td><b>Rule cards</b></td><td>Rule id with link to its source, the request part (JSON field, query arg, cookie, header, path), the matched text highlighted, decoding steps, the regex / libinjection fingerprint.</td></tr>
+    <tr><td><b>Exclusion helper</b></td><td>Copy-ready ModSecurity/CRS rule exclusions and an Azure WAF exclusion for false positives – test them immediately in the settings.</td></tr>
+  </table>
+  <div class="box ok"><p><b>Accuracy.</b> The engine is a JavaScript re-implementation of ModSecurity v2 running the unmodified CRS rule files. It passes 99.9&nbsp;% of the official CRS regression tests (5162/5166 for v4.30.0). Your production WAF may still differ in version, paranoia level, limits or exclusions – treat the result as “what a standard CRS installation would do”.</p></div>
+  <h3>Contents</h3>
+  <ol class="toc">
+    <li>What the extension does</li>
+    <li>Install the extension in Chrome</li>
+    <li>Open the OWASP CRS tab in DevTools</li>
+    <li>Reading the panel</li>
+    <li>Paranoia levels (PL1–PL4) and anomaly scores</li>
+    <li>Reading a rule card</li>
+    <li>Recommendations &amp; issues report</li>
+    <li>Worked examples (demo shop)</li>
+    <li>Fixing false positives with exclusions</li>
+    <li>Why the extension and Azure WAF can disagree</li>
+    <li>Use your own WAF configuration (CRS / Azure)</li>
+    <li>Pasting requests</li>
+    <li>Settings</li>
+    <li>FAQ &amp; troubleshooting</li>
+  </ol>
+</section>
+
+<!-- 2. Install -->
+<section class="section">
+  <h2><span class="num">2</span>Install the extension in Chrome</h2>
+  <p class="lead">The extension is not in the Chrome Web Store; it is loaded “unpacked” from the project folder. This takes about a minute and only needs to be done once.</p>
+  <ol class="steps">
+    <li><strong>Open the extensions page</strong>Type <code>chrome://extensions</code> into the address bar and press <span class="kbd">Enter</span> (or menu <b>⋮ → Extensions → Manage Extensions</b>).</li>
+    <li><strong>Turn on Developer mode</strong>Switch on the <b>Developer mode</b> toggle in the top-right corner.
+      <figure><img src="img/01-extensions-devmode.png" alt="Developer mode toggle"><figcaption>The Developer mode toggle (top right).</figcaption></figure>
+    </li>
+    <li><strong>Click “Load unpacked”</strong>Three new buttons appear. Click <b>Load unpacked</b>.
+      <figure><img src="img/02-load-unpacked.png" alt="Load unpacked button"><figcaption>“Load unpacked” appears once Developer mode is on.</figcaption></figure>
+    </li>
+  </ol>
+</section>
+<section class="section">
+  <ol class="steps" start="4" style="counter-reset: step 3">
+    <li><strong>Select the <code>extension</code> folder</strong>In the folder picker, open the project and select the folder named <code>extension</code> (the one that contains <code>manifest.json</code>), e.g.<br><code>C:\Users\&lt;you&gt;\src\crs-request-inspector\extension</code>, then click <b>Select Folder</b>. Do not select the project root or <code>extension\src</code>.</li>
+    <li><strong>Check that it is installed</strong>A card <b>CRS Request Inspector</b> appears. Make sure its toggle is on.
+      <figure><img src="img/03-extension-card.png" alt="Extension card"><figcaption>The installed extension. The ↻ icon reloads it after you update the files.</figcaption></figure>
+    </li>
+    <li><strong>Optional: pin the toolbar icon</strong>Click the puzzle icon <b>🧩</b> in the Chrome toolbar and pin <b>CRS Request Inspector</b>. Clicking the icon opens the analyser in a normal tab for pasting requests without DevTools.</li>
+  </ol>
+  <div class="box"><p><b>Updating.</b> When the files change (e.g. new rule sets), click <b>↻</b> on the extension card, then close and reopen DevTools. Chrome may occasionally show a notice about developer-mode extensions at start-up – choose to keep the extension.</p></div>
+  <div class="box ok"><p><b>Permissions.</b> The extension only requests <code>storage</code> (for its settings). It reads requests through the DevTools API of the tab you are inspecting and never sends data anywhere.</p></div>
+</section>
+
+<!-- 3. Open the tab -->
+<section class="section">
+  <h2><span class="num">3</span>Open the OWASP CRS tab in DevTools</h2>
+  <ol class="steps">
+    <li><strong>Open DevTools on your application</strong>Press <span class="kbd">F12</span> or <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">I</span> on the page you want to test.</li>
+    <li><strong>Select the “OWASP CRS” tab</strong>It sits in the DevTools tab bar next to <i>Network</i>. If the window is narrow, it is hidden behind the <b>»</b> overflow button.
+      <figure><img src="img/05-devtools-tab.png" alt="DevTools tab bar with OWASP CRS"><figcaption>The OWASP CRS tab in the DevTools tab bar (right of Recorder / AdBlock).</figcaption></figure>
+    </li>
+    <li><strong>Reload the page</strong>Requests are captured from the moment DevTools is open, like the Network tab. Press <span class="kbd">F5</span> to capture the full page load, then use the application normally – every request appears in the list as it completes.</li>
+  </ol>
+  <div class="box warn"><p><b>Nothing appears?</b> DevTools must be open <em>before</em> the requests are made – reload the page. The red ● record button in the toolbar must be on. Use <b>Preserve log</b> to keep entries across page navigations.</p></div>
+  <h3>Without DevTools: the standalone page</h3>
+  <p>The toolbar icon opens the same interface in a normal tab (no live capture). Use it to paste requests or import HAR files.</p>
+  <figure><img src="img/04-standalone.png" alt="Standalone analyser"><figcaption>Standalone page: paste a request or import a HAR file.</figcaption></figure>
+</section>
+
+<!-- 4. Reading the panel -->
+<section class="section">
+  <h2><span class="num">4</span>Reading the panel</h2>
+  <p class="lead">Left: all requests (like the Network tab). Right: the analysis of the selected request.</p>
+  <figure><div class="crop" style="aspect-ratio: 1440 / 450"><img src="img/10-overview.png" alt="Panel overview"></div></figure>
+  <ul class="callouts">
+    <li><b class="n">1</b><b>Record / clear / preserve log.</b> Stop or clear the capture; keep entries across navigations.</li>
+    <li><b class="n">2</b><b>Paste request / Import HAR.</b> Analyse requests copied from DevTools or a HAR file (also <span class="kbd">Ctrl</span>+<span class="kbd">V</span> anywhere in the panel, or drag &amp; drop).</li>
+    <li><b class="n">3</b><b>Paranoia level &amp; threshold.</b> The WAF configuration to simulate: blocking paranoia level PL1–PL4 and the inbound anomaly threshold (default 5). Changing them re-analyses everything. See section 5.</li>
+    <li><b class="n">4</b><b>Quick filters.</b> <i>All</i>, <i>Blocked</i> (would be blocked at the selected PL), <i>Hits</i> (rules matched but not blocked), <i>Clean</i>; resource types; host filter; free-text filter (URL, method or rule id).</li>
+    <li><b class="n">5</b><b>Status icon</b> per request – see the legend below.</li>
+    <li><b class="n">6</b><b>Score.</b> <code>8 / 5</code> = anomaly score at the selected PL / threshold. The four small boxes are PL1–PL4 (see below).</li>
+    <li><b class="n">7</b><b>Top rules.</b> Rule ids that matched. <span class="pill red">red</span> = counts at the selected PL, <span class="pill grey">grey</span> = only at higher PLs; <i>+N</i> = more rules.</li>
+    <li><b class="n">8</b><b>Verdict.</b> <i>Would be BLOCKED</i>, <i>Passes</i> or <i>Clean</i>, with the reason and the rule that blocks (949110 = inbound anomaly score exceeded → HTTP 403).</li>
+    <li><b class="n">9</b><b>Paranoia matrix.</b> The cumulative score the request would reach at each PL and whether it would pass or be blocked. The outlined box is your selected PL.</li>
+    <li><b class="n">10</b><b>Findings.</b> One card per rule hit. <i>Counted at PLn</i> = rules that count towards the verdict; <i>Only at higher paranoia levels</i> = rules that would only count if you raise the level.</li>
+  </ul>
+  <h3>Status icons in the list</h3>
+  <table>
+    <tr><th style="width:18%">Icon</th><th style="width:30%">Meaning</th><th>What to do</th></tr>
+    <tr><td><span class="pill red">⊗ red</span></td><td>Would be <b>blocked</b> at the selected PL</td><td>Open it, look at the rule cards: real attack pattern, or a false positive to exclude?</td></tr>
+    <tr><td><span class="pill amber">⚠ orange</span></td><td>Rules count at the selected PL, but the total stays <b>below the threshold</b></td><td>Passes today, but one more hit in the same request would block it.</td></tr>
+    <tr><td><span class="pill grey">⇧ grey</span></td><td>Rules match <b>only at higher PLs</b></td><td>Passes at your PL. Relevant if you plan to raise the paranoia level.</td></tr>
+    <tr><td><span class="pill green">✓ green</span></td><td><b>Clean</b> – no CRS rule matched up to PL4</td><td>Nothing to do.</td></tr>
+  </table>
+  <p><b>The four boxes in the Score column</b> are PL1, PL2, PL3, PL4 from left to right: <span class="pill red">red</span> = would be blocked at that level, <span class="pill amber">orange</span> = rules hit but the score stays below the threshold, empty = no hits. The box of the selected PL is outlined. Example: <code>□■■■</code> means “passes at PL1, blocked from PL2 upwards”.</p>
+</section>
+
+<!-- 5. Paranoia levels -->
+<section class="section">
+  <h2><span class="num">5</span>Paranoia levels (PL1–PL4) and anomaly scores</h2>
+  <p class="lead">CRS does not block on a single “bad pattern”. Every matching rule adds points to an <b>anomaly score</b>; the request is blocked when the score reaches the <b>threshold</b>. The <b>paranoia level</b> decides which rules take part.</p>
+  <h3>What a paranoia level is</h3>
+  <p>Every CRS rule belongs to one paranoia level (tag <code>paranoia-level/N</code>). A WAF configured with PL<i>n</i> runs <b>all rules from PL1 up to PL<i>n</i></b>. Higher levels add stricter rules: more attacks detected, but also many more false positives on normal traffic.</p>
+  <table>
+    <tr><th style="width:11%">Level</th><th style="width:25%">Strictness</th><th>Typical use and false-positive risk</th></tr>
+    <tr><td class="pl">PL1</td><td>Baseline (default)</td><td>Recommended starting point for almost every application. Few false positives; blocks clear attacks (SQL injection, XSS, path traversal, …). Most managed WAF setups run at this level.</td></tr>
+    <tr><td class="pl">PL2</td><td>Elevated</td><td>Applications with sensitive data. Adds more SQL/XSS/RCE patterns and checks on special characters. False positives are common with free text, rich text, tokens and signed URLs – needs tuning.</td></tr>
+    <tr><td class="pl">PL3</td><td>High</td><td>Banking / high-security. Counts special characters, very strict protocol checks. Many false positives; requires a dedicated tuning effort.</td></tr>
+    <tr><td class="pl">PL4</td><td>Paranoid</td><td>Extremely strict (e.g. allows only a very small character set in arguments). Nearly every real application needs extensive exclusions.</td></tr>
+  </table>
+  <h3>How the score works</h3>
+  <table>
+    <tr><th style="width:25%">Rule severity</th><th style="width:15%">Points</th><th>Effect with the default threshold 5</th></tr>
+    <tr><td>CRITICAL</td><td>+5</td><td>One hit is enough to block.</td></tr>
+    <tr><td>ERROR</td><td>+4</td><td>Blocks together with any other hit.</td></tr>
+    <tr><td>WARNING</td><td>+3</td><td>Needs at least one more hit.</td></tr>
+    <tr><td>NOTICE</td><td>+2</td><td>Needs further hits.</td></tr>
+  </table>
+  <p>A rule that matches in several places (e.g. two query parameters) adds its points for each match. At the end of the request phase, rule <b>949110</b> compares the total with the threshold and denies the request with <b>HTTP 403</b> (shown as <span class="pill red">949110 DENY 403</span> in the verdict). Responses are scored the same way with the outbound threshold (default 4, rule 959100).</p>
+  <h3>Reading the PL matrix</h3>
+  <div class="verdicts">
+    <figure><img src="img/14-verdict-latent.png" alt="Verdict passes, blocks from PL2"><figcaption><b>Passes at PL1, blocked from PL2.</b> No rule counts at PL1 (score 0 &lt; 5). If the WAF ran PL2, rule 942440 (+5) would block it; at PL3 the score is 8, at PL4 19.</figcaption></figure>
+    <figure><img src="img/13-verdict-blocked.png" alt="Verdict blocked"><figcaption><b>Blocked at every level.</b> A SQL-injection payload scores 8 already at PL1 (≥ 5) – rule 949110 would answer with 403.</figcaption></figure>
+    <figure><img src="img/15-verdict-clean.png" alt="Verdict clean"><figcaption><b>Clean.</b> No rule matched up to PL4.</figcaption></figure>
+  </div>
+  <div class="box"><p><b>The numbers are cumulative:</b> the PL3 box is the sum of all hits from PL1, PL2 and PL3 – exactly what a WAF configured with PL3 would compute. The toolbar PL buttons choose the <i>blocking</i> level you want to simulate; the extension always also evaluates up to PL4 (<i>detection</i> level, see Settings) so you can see what would happen if you raised it.</p></div>
+  <div class="box warn"><p><b>Which PL does our WAF use?</b> Ask whoever manages the WAF policy (or check its configuration: <code>tx.blocking_paranoia_level</code> in CRS 4, <code>tx.paranoia_level</code> in CRS 3, the managed rule set and disabled rules in Azure). If unknown, assume <b>PL1</b> and threshold <b>5</b>.</p></div>
+</section>
+
+<!-- 6. Rule card -->
+<section class="section">
+  <h2><span class="num">6</span>Reading a rule card</h2>
+  <p class="lead">Click a rule in the findings list to expand it. Every card starts with a <b>How to fix</b> box (section 7), followed by the technical details. Example: rule 942440 matching a signed image URL.</p>
+  <figure><img src="img/11-finding-card.png" alt="Expanded rule card"></figure>
+  <ul class="callouts">
+    <li><b class="n">1</b><b>Rule header.</b> Rule id (links to the exact line in the CRS source on GitHub), severity, paranoia level, points added (<i>+5</i>), attack category and the rule's message. <i>only at PL2+</i> = does not count at the selected PL.</li>
+    <li style="grid-column: 1 / -1"><b class="n" style="background:#1e8e3e">✓</b><b>How to fix</b> – assessment (likely false positive / review / attack / policy), what the rule looks for, and concrete changes for the application, the WAF and Azure WAF – see section 7.</li>
+    <li><b class="n">2</b><b>Where</b> – the part of the request that matched, in plain words (<i>Query arg “Signature”</i>, <i>JSON body field “content”</i>, <i>Cookie “session”</i>, <i>Header “User-Agent”</i>, <i>URL path</i>) and the ModSecurity variable name (<code>ARGS:Signature</code>) you need for exclusions.</li>
+    <li><b class="n">3</b><b>Matched</b> – the value, with the part that triggered the rule highlighted. The value is shown after decoding (see 4); expand <i>Original value</i> to see it as sent.</li>
+    <li><b class="n">4</b><b>Transforms</b> – how the WAF normalised the value before matching (URL-decoding, HTML entity decoding, lower-casing, comment removal …). Attackers use encodings to hide payloads; the WAF decodes first.</li>
+    <li><b class="n">5</b><b>Operator</b> – the test that fired: <code>@rx</code> regular expression (copyable), <code>@detectSQLi</code>/<code>@detectXSS</code> with the libinjection fingerprint, <code>@pm</code> keyword list, etc.</li>
+    <li><b class="n">6</b><b>Inspects</b> – all request parts this rule looks at. <b>Chained</b> – extra conditions that must also be true (here: the value must <i>not</i> look like a JWT).</li>
+    <li><b class="n">7</b><b>Log data</b> – exactly what the WAF would write to its audit log (useful to match against WAF logs).</li>
+    <li><b class="n">8</b><b>Actions</b> – copy rule id / value, show the rule's SecLang source, open the <b>Exclusion</b> helper (section 9), open the rule file on GitHub.</li>
+  </ul>
+  <div class="box"><p><b>Notes above the findings</b> explain how the request was interpreted – e.g. <span class="pill grey">PARSER</span> “Detected HTTP/2 pseudo-headers …” (Chrome sends HTTP/2; the <code>:authority</code>, <code>:path</code> … headers are not real headers) or a body that could not be parsed as JSON (ModSecurity rejects such requests with rule 200002).</p></div>
+</section>
+
+<!-- 7. Recommendations -->
+<section class="section">
+  <h2><span class="num">7</span>Recommendations &amp; issues report</h2>
+  <p class="lead">For every finding the extension explains what to change – so developers know whether to fix the website or ask for a WAF exclusion.</p>
+  <figure><img src="img/19-how-to-fix.png" alt="How to fix box"><figcaption>“How to fix” for a DELETE request blocked by 911100 (method not allowed).</figcaption></figure>
+  <table>
+    <tr><th style="width:30%">Assessment</th><th>Meaning and typical action</th></tr>
+    <tr><td><span class="pill green">Likely false positive</span></td><td>The matched value is random data – a JWT, signature, base64 token, hash or UUID. It only looks like attack syntax. <b>Action:</b> WAF exclusion for that variable (or, if your code generates it, a format without special characters).</td></tr>
+    <tr><td><span class="pill amber">Review – probably legitimate input</span></td><td>User-entered text or HTML (reviews, comments, search). Usually legitimate. <b>Action:</b> confirm the server handles it safely (parameterised queries, output encoding, no shell/eval), then exclude only that field on that endpoint.</td></tr>
+    <tr><td><span class="pill red">Looks like an attack payload</span></td><td>A strong PL1 signature (libinjection SQLi/XSS, path traversal). <b>Action:</b> if this was normal application traffic, find out why the app produces such a value – otherwise the WAF is doing its job.</td></tr>
+    <tr><td><span class="pill" style="color:#174ea6;border-color:#c3d7fb;background:#e8f0fe">Protocol / policy issue</span></td><td>The request breaks a policy (method, content type, missing header, size limit). <b>Action:</b> fix the client, or adjust the WAF policy (e.g. allowed methods).</td></tr>
+    <tr><td><span class="pill red">Information leak</span></td><td>The response shows error details or stack traces. <b>Action:</b> disable detailed errors in production.</td></tr>
+  </table>
+  <h3>Issues report – all findings in one list</h3>
+  <p>Click <b>Issues report</b> in the toolbar. All findings of the captured requests are grouped by <i>rule + request part</i> with the number of requests, the affected endpoints (ids generalised, e.g. <code>/orders/:id</code>) and the recommendation. Findings that count at your paranoia level come first. <b>Copy as Markdown</b> / <b>Download .md</b> produce a report you can paste into a ticket or pull request.</p>
+  <figure><img src="img/21-issue-open.png" alt="Issues report"><figcaption>Issues report with one finding expanded.</figcaption></figure>
+</section>
+
+<!-- 8. Worked examples -->
+<section class="section">
+  <h2><span class="num">8</span>Worked examples (demo shop)</h2>
+  <p class="lead">These examples come from the fictitious <b>Example Shop</b> in <code>demo/</code> (<code>node demo/server.mjs</code>, then open DevTools → <b>OWASP CRS</b> and click <i>Browse normally</i> / <i>Send attack samples</i>). They are typical of what the panel finds on real applications.</p>
+  <h3>Signed image URLs</h3>
+  <p>Product images are loaded through a CDN with signed URLs, e.g. <code>/images/products/1042/hero.webp?Expires=…&amp;Signature=…&amp;Key-Pair-Id=…</code>.</p>
+  <table>
+    <tr><th style="width:12%">PL</th><th style="width:16%">Score</th><th>Why</th></tr>
+    <tr><td class="pl">PL1</td><td><span class="pill green">0 · pass</span></td><td>No PL1 rule matches – at the default level these requests are fine.</td></tr>
+    <tr><td class="pl">PL2</td><td><span class="pill red">5 · block</span></td><td>The <code>Signature</code> value is URL-safe base64 and contains <code>--</code> and <code>~</code>. <b>942440 “SQL Comment Sequence Detected”</b> sees <code>--</code> (an SQL comment) → +5 = blocked.</td></tr>
+    <tr><td class="pl">PL3–4</td><td><span class="pill red">11–28 · block</span></td><td>942431/942432 count special characters, 920273 rejects characters outside a strict set.</td></tr>
+  </table>
+  <p><b>Conclusion:</b> at PL1 nothing is blocked. If the WAF runs at PL2 or higher, <b>every</b> product image would get a 403 – a classic false positive. The signature is random data, not user input, so it is safe to exclude <code>ARGS:Signature</code> from the SQL-injection rules for the <code>/images/</code> path.</p>
+  <h3>Product reviews (free text)</h3>
+  <p><code>POST /api/products/1042/reviews</code> sends <code>{"rating":5,"text":"Great sound! Select the 'bass boost' mode from the app – it works where others don't."}</code>. At PL1 it passes; at PL2 rules such as <b>942200</b> see SQL-like words and quotes (“Select … from”, <code>'</code>) and the score reaches 15. The text is legitimate, but it <i>is</i> user input: keep it parameterised/escaped in the application and, if you run PL2, exclude only <code>ARGS:json.text</code> on the reviews endpoint.</p>
+  <h3>Session cookie containing a JWT</h3>
+  <p>Almost every request shows hits on <b>942420</b> (PL3) and <b>942421</b> (PL4) – “Restricted SQL character anomaly detection (cookies)”. The cause is the <code>shop_session</code> cookie: it holds a full JWT whose signature contains many <code>-</code> characters, which these rules count as SQL special characters.</p>
+  <ul>
+    <li><b>Impact:</b> none at PL1/PL2 – and Azure WAF does not run PL3/PL4 rules at all.</li>
+    <li><b>Application option:</b> store an opaque random session id in the cookie and keep the JWT server-side – smaller cookies, no special characters, token not exposed to the browser.</li>
+    <li><b>WAF option (only if you run CRS at PL3+):</b> exclude <code>REQUEST_COOKIES:shop_session</code> from 942420/942421.</li>
+  </ul>
+  <h3>PUT / PATCH / DELETE API calls</h3>
+  <p><code>PUT /api/account/profile</code> scores 5 at PL1 because of <b>911100 “Method is not allowed by policy”</b>: standard CRS allows only GET, HEAD, POST and OPTIONS. This is a WAF policy question, not a bug in the request – see section 10 for why it may not be blocked in your environment.</p>
+  <h3>Client-side encoded fields</h3>
+  <p>Some applications encode free text on the client (base64, hex) before sending it. Encoded content passes the WAF because the WAF cannot read it – the same effect as an exclusion, but invisible to whoever operates the WAF. That is acceptable only if the server validates and safely handles the decoded text; an explicit, documented exclusion for that one field on that one endpoint is the more transparent alternative.</p>
+  <div class="box warn"><p><b>Real attack or false positive?</b> Ask: does the matched value come from a user, and could it reach a database, a shell or an HTML page? Random tokens, signatures, hashes and encrypted blobs → false positive. Free text from a form, search box or review → real risk; exclude only narrowly (one field, one endpoint) and make sure the application escapes/parameterises it.</p></div>
+</section>
+
+<!-- 9. Exclusions -->
+<section class="section">
+  <h2><span class="num">9</span>Fixing false positives with exclusions</h2>
+  <p class="lead">Click <b>Exclusion</b> on a rule card. The helper generates snippets for the matched variable and endpoint – ids, numbers and UUIDs in the path are generalised (<code>[^/]+</code>, <code>[0-9]+</code>).</p>
+  <figure><img src="img/12-exclusion.png" alt="Exclusion helper" style="max-height: 175mm; width: auto; max-width: 100%; margin: 0 auto;"></figure>
+  <table>
+    <tr><th style="width:30%">Snippet</th><th>When to use</th></tr>
+    <tr><td>Runtime exclusion — this endpoint, this variable</td><td><b>Preferred.</b> Removes one variable from one rule on matching URLs only. Goes into the rules loaded <i>before</i> CRS.</td></tr>
+    <tr><td>Runtime exclusion — this endpoint, whole rule</td><td>When the rule hits many variables on that endpoint.</td></tr>
+    <tr><td>Configure-time — everywhere, this variable</td><td>The variable is never dangerous anywhere (e.g. a CSRF token). Goes <i>after</i> CRS.</td></tr>
+    <tr><td>Azure WAF</td><td>Exclusion JSON for Application Gateway / Front Door WAF policies (match variable, selector, rule).</td></tr>
+  </table>
+  <h3>Verify an exclusion before rolling it out</h3>
+  <ol class="steps">
+    <li><strong>Copy the snippet</strong>Use the <b>Copy</b> button next to it.</li>
+    <li><strong>Paste it into the settings</strong>Open settings (⚙), paste it into <i>Custom rules before CRS</i> (runtime exclusions) or <i>after CRS</i> (<code>SecRuleUpdateTargetById</code>), click <b>Apply</b>.</li>
+    <li><strong>Check the result</strong>All requests are re-analysed. The rule should disappear from the card list and the verdict should change to <i>Passes</i>. Then hand the snippet to the WAF owner.</li>
+  </ol>
+</section>
+
+<!-- 10. Azure -->
+<section class="section">
+  <h2><span class="num">10</span>Why the extension and Azure WAF can disagree</h2>
+  <p class="lead">With the default profile the extension shows what a <b>standard CRS installation in blocking mode</b> would do – load your own policy (section 11) to simulate your actual Azure WAF. If a request it marks as blocked goes through in your environment, the WAF in front of the application is configured differently – or is not enforcing at all.</p>
+  <h3>Which WAF is in front of the site?</h3>
+  <p>Look at the response headers in the Network tab: <code>x-azure-ref</code> means the site is served through <b>Azure Front Door</b>; Application Gateway WAF usually leaves no header but answers blocked requests with its own 403 page. Azure WAF policies use Microsoft's Default Rule Set (DRS 2.x – based on CRS 3.3 plus Microsoft rules), not the open-source CRS 4 that the extension uses by default – switch the profile to <b>Azure WAF</b> and import your policy (section 11) for an exact simulation.</p>
+  <table>
+    <tr><th style="width:34%">Possible reason</th><th>Explanation</th></tr>
+    <tr><td><b>Policy in Detection mode</b></td><td>Azure enables managed rules <b>in Detection mode by default</b>: matches are only logged, nothing is blocked. Very common in dev/test environments.</td></tr>
+    <tr><td><b>Front Door Standard tier</b></td><td>Managed rule sets (DRS) are only available on <b>Front Door Premium</b> (and classic). On Standard only custom rules exist – no CRS-style detection at all.</td></tr>
+    <tr><td><b>No WAF policy on this domain</b></td><td>The WAF policy must be attached to the endpoint / domain through a Front Door security policy.</td></tr>
+    <tr><td><b>Rule disabled or excluded</b></td><td>911100 (or another rule) may be disabled, set to Log, covered by an exclusion or by a custom Allow rule.</td></tr>
+    <tr><td><b>Different rule set</b></td><td>DRS differs from CRS 4: no PL3/PL4 rules, PL2 rules disabled by default in DRS 2.2, some rules replaced by Microsoft rules (e.g. 942440 → 99031002). The <i>How to fix</i> box shows these Azure notes per rule.</td></tr>
+  </table>
+  <h3>How to verify</h3>
+  <ol class="steps">
+    <li><strong>Check the WAF policy</strong>Azure portal → Front Door profile → <i>Security policies</i> → WAF policy → <i>Policy settings</i>: <b>Mode</b> (Detection / Prevention); <i>Managed rules</i>: rule set version and the state of rule 911100. With the Azure CLI:
+      <pre class="mono" style="background:#f5f7fa;border:1px solid #e3e6eb;border-radius:4px;padding:2.5mm;white-space:pre-wrap;font-size:8pt;margin:2mm 0 0">az afd profile show -g &lt;resource-group&gt; --profile-name &lt;profile&gt; --query sku.name
+az afd security-policy list -g &lt;resource-group&gt; --profile-name &lt;profile&gt; -o table
+az network front-door waf-policy show -g &lt;resource-group&gt; -n &lt;policy&gt; --query "{mode:policySettings.mode, state:policySettings.enabledState, rules:managedRules.managedRuleSets[].{type:ruleSetType, version:ruleSetVersion}}"</pre></li>
+    <li><strong>Look at the WAF log</strong>If diagnostic logs are sent to Log Analytics, this shows what the WAF decided for the PUT request (<code>action_s</code> = Log / Block / AnomalyScoring):
+      <pre class="mono" style="background:#f5f7fa;border:1px solid #e3e6eb;border-radius:4px;padding:2.5mm;white-space:pre-wrap;font-size:8pt;margin:2mm 0 0">AzureDiagnostics
+| where Category == "FrontDoorWebApplicationFirewallLog"
+| where requestUri_s has "/api/account/profile"
+| project TimeGenerated, ruleName_s, action_s, policyMode_s, details_msg_s, requestUri_s
+| order by TimeGenerated desc</pre></li>
+    <li><strong>Optional live test</strong>An obvious, harmless test string shows immediately whether the WAF blocks: a <b>403</b> from Front Door means Prevention mode with managed rules is active; a normal response (e.g. <b>401</b> from the App Service login) means the WAF does not block. Inform your security team first – this deliberately triggers a WAF alert.
+      <pre class="mono" style="background:#f5f7fa;border:1px solid #e3e6eb;border-radius:4px;padding:2.5mm;white-space:pre-wrap;font-size:8pt;margin:2mm 0 0">curl -s -o /dev/null -w "%{http_code}\n" "https://shop.example.com/?crs-test=%3Cscript%3Ealert(1)%3C%2Fscript%3E"</pre></li>
+  </ol>
+</section>
+
+<section class="section">
+  <h2><span class="num">11</span>Use your own WAF configuration</h2>
+  <p class="lead">The extension supports two WAF profiles: <b>OWASP CRS</b> (ModSecurity, Coraza and other CRS-based WAFs) and <b>Azure WAF policy</b> (Front Door / Application Gateway). Both can import your real configuration.</p>
+  <table>
+    <tr><th style="width:28%">Profile</th><th style="width:34%">Import formats</th><th>What is applied</th></tr>
+    <tr><td><b>OWASP CRS</b><br><span class="muted small">ModSecurity, Coraza, CRS-based WAFs</span></td><td><code>crs-setup.conf</code>, REQUEST-900 / RESPONSE-999 exclusion files, any SecRule/SecAction files (Settings → <i>Import ModSecurity / Coraza / CRS configuration</i>)</td><td>Paranoia levels, thresholds, CRS version (from <code>tx.*</code> setvars) become settings; exclusions and other rules go into the custom rules before / after CRS. Warns about <code>SecRuleEngine DetectionOnly</code> and <code>Include</code> lines.</td></tr>
+    <tr><td><b>Azure WAF policy</b><br><span class="muted small">Front Door, Application Gateway</span></td><td>Policy JSON (portal JSON View, <code>az … waf-policy show</code>, ARM export), <b>Terraform</b> (<code>azurerm_cdn_frontdoor_firewall_policy</code>, <code>azurerm_frontdoor_firewall_policy</code>, <code>azurerm_web_application_firewall_policy</code>), <b>Bicep</b> – detected automatically</td><td>Custom rules, managed rule set version, rule overrides, exclusions, rule-set action, mode (see below).</td></tr>
+  </table>
+  <p>AWS WAF and Cloudflare configurations are recognised but cannot be simulated – they use their own rule engines. Exclusion snippets are offered for every profile: ModSecurity SecLang, and for Azure as Front Door JSON, Azure CLI, Terraform, Bicep and Application Gateway JSON.</p>
+  <h3>Azure WAF policy</h3>
+  <ol class="steps">
+    <li><strong>Export the policy</strong>Azure portal → your WAF policy → <i>Overview</i> → <b>JSON View</b> → copy, use your Terraform / Bicep file, or the Azure CLI:
+      <pre class="mono" style="background:#f5f7fa;border:1px solid #e3e6eb;border-radius:4px;padding:2.5mm;white-space:pre-wrap;font-size:8pt;margin:2mm 0 0">az network front-door waf-policy show -g &lt;resource-group&gt; -n &lt;policy-name&gt; &gt; waf-policy.json</pre>
+      ARM/Bicep exports and Application Gateway policies (<code>az network application-gateway waf-policy show</code>) work too.</li>
+    <li><strong>Load it into the extension</strong>Settings (⚙) → <b>WAF profile</b> → <i>Azure WAF policy</i> → paste it or <b>Load file…</b> (.json, .tf, .bicep) – the format is detected automatically. A summary appears immediately (mode, rule set, custom rules, overrides, exclusions) together with notes about anything that cannot be simulated. Optionally set the <b>client IP</b> and <b>client country</b> used by IPMatch/GeoMatch custom rules. Click <b>Apply</b>.</li>
+    <li><strong>Read the Azure verdict</b>Every request now shows <i>Would be BLOCKED by Azure WAF</i>, <i>Allowed by Azure WAF</i> or <i>Passes</i>, which component decided (a custom rule with its priority, or the managed rule set's anomaly score), and an <b>Azure WAF</b> panel listing each custom rule in priority order with the result of every match condition and the value it saw.</li>
+  </ol>
+  <div class="two">
+    <figure style="margin-top:0"><img src="img/24-azure-settings.png" alt="Azure policy import"><figcaption>Imported policy summary in the settings.</figcaption></figure>
+    <div>
+      <table>
+        <tr><th>Simulated</th><th>How</th></tr>
+        <tr><td>Custom rules</td><td>Priority order; Allow / Block / Redirect stop evaluation, Log continues; all conditions AND, values OR; transforms; negation; size operators compare byte length; IPMatch / GeoMatch via the client IP / country setting.</td></tr>
+        <tr><td>Managed rules (DRS)</td><td>Only rules that exist in your DRS version (2.2, 2.1, 2.0, 1.x) and are enabled in the policy; Azure's severities; anomaly threshold 5; rule-set action (Block / Log / Redirect).</td></tr>
+        <tr><td>Rule overrides</td><td>Disabled rules are removed; rule action <i>Log</i> reports the rule without adding to the score; <i>Block</i> / <i>Redirect</i> block immediately; <i>Allow</i> stops evaluation.</td></tr>
+        <tr><td>Exclusions</td><td>Header / cookie / query / post / JSON argument exclusions at policy, rule-set, group and rule level (Equals, StartsWith, EndsWith, Contains, EqualsAny).</td></tr>
+        <tr><td>Mode</td><td>Detection → “logged only”; disabled policy → nothing inspected.</td></tr>
+      </table>
+    </div>
+  </div>
+  <figure><img src="img/22-azure-put.png" alt="Azure verdict"><figcaption>PUT request blocked by the managed rules (911100) of DRS 2.1 in Prevention mode; the Azure WAF panel shows that no custom rule ended the evaluation.</figcaption></figure>
+  <div class="box warn"><p><b>Not simulated:</b> Microsoft Threat Intelligence rules (rule ids 99xxxxxx – not public), the Bot Manager rule set (IP reputation), rate limits (a single request cannot exceed a rate), ASN / client-fingerprint / service-tag conditions. DRS rules are approximated with the equivalent OWASP CRS 3.3 rules they are based on – Microsoft may have tuned individual signatures. The policy JSON is stored only in your browser.</p></div>
+</section>
+
+<!-- 12. Paste -->
+<section class="section">
+  <h2><span class="num">12</span>Pasting requests</h2>
+  <p class="lead">Useful for requests from colleagues, tickets or other browsers, or to test a modified request.</p>
+  <ol class="steps">
+    <li><strong>Copy the request in DevTools</strong><i>Network</i> tab → right-click the request → <b>Copy</b> → <b>Copy as PowerShell</b> (best: includes cookies and user agent), <b>Copy as cURL (bash)</b> / <b>(cmd)</b>, <b>Copy as fetch</b>, or <b>Copy all as …</b> for many requests.</li>
+    <li><strong>Paste into the panel</strong>Press <span class="kbd">Ctrl</span>+<span class="kbd">V</span> in the OWASP CRS tab or click <b>Paste request</b>. The format is detected automatically; click <b>Analyze</b> (<span class="kbd">Ctrl</span>+<span class="kbd">Enter</span>).</li>
+  </ol>
+  <figure><img src="img/17-paste-dialog.png" alt="Paste dialog"><figcaption>The paste dialog detects the format (here cURL, 1 request).</figcaption></figure>
+  <table>
+    <tr><th style="width:28%">Format</th><th>Notes</th></tr>
+    <tr><td>PowerShell</td><td>Recommended. HTTP/2 pseudo-headers (<code>authority</code>, <code>method</code>, <code>path</code>, <code>scheme</code>) are recognised; cookies from <code>$session.Cookies</code> are included.</td></tr>
+    <tr><td>cURL (bash / cmd)</td><td>Includes cookies (<code>-b</code>). Note: cURL copies omit the browser's <code>Accept-Encoding</code>.</td></tr>
+    <tr><td>fetch / fetch (Node.js)</td><td>Browser fetch copies contain <b>no cookies and no User-Agent</b> – may cause extra PL2 hits (920320 “missing User-Agent”).</td></tr>
+    <tr><td>Raw HTTP</td><td><code>POST /path HTTP/1.1</code>, headers, blank line, body. Separate several requests with a line <code>###</code>.</td></tr>
+    <tr><td>HAR</td><td><b>Import HAR</b> or drop a <code>.har</code> file (Network tab → ⤓ Export HAR).</td></tr>
+  </table>
+  <div class="box warn"><p><b>Sensitive data.</b> Copied requests contain session cookies and tokens. The extension keeps them in memory only and never sends them anywhere – but take care where else you paste them.</p></div>
+</section>
+
+<!-- 13. Settings -->
+<section class="section">
+  <h2><span class="num">13</span>Settings</h2>
+  <div class="two">
+    <figure style="margin-top:0"><img src="img/18-settings.png" alt="Settings drawer"></figure>
+    <div>
+      <table>
+        <tr><th>Setting</th><th>Meaning</th></tr>
+        <tr><td>CRS version</td><td>v4.30.0 (latest), v4.25.2 (LTS), v3.3.10 (closest to many managed WAFs based on CRS 3.x).</td></tr>
+        <tr><td>Blocking paranoia level</td><td>Same as the toolbar PL buttons: rules up to this level count.</td></tr>
+        <tr><td>Detection paranoia level</td><td>Rules up to this level are evaluated and shown, without affecting the verdict. Keep at PL4.</td></tr>
+        <tr><td>Inbound / outbound threshold</td><td>Score at which requests / responses are blocked (CRS defaults 5 / 4).</td></tr>
+        <tr><td>ModSecurity base config</td><td>JSON/XML body parsing, 128&nbsp;KB body limit, invalid body → 400. Keep on.</td></tr>
+        <tr><td>Evaluate responses</td><td>Also checks HTML/text responses for data leakage (stack traces, SQL errors).</td></tr>
+        <tr><td>Early blocking</td><td>CRS 4 option: block already after the request headers.</td></tr>
+        <tr><td>Continue after block</td><td>Keep evaluating after the blocking decision so all hits are listed.</td></tr>
+        <tr><td>HTTP version</td><td>Simulate the protocol the WAF sees (e.g. HTTP/1.1 behind a CDN).</td></tr>
+        <tr><td>Custom rules before / after CRS</td><td>Your WAF's own configuration: e.g. <code>tx.allowed_methods</code> (CRS blocks PUT/PATCH/DELETE by default!), exclusions.</td></tr>
+      </table>
+      <div class="box small"><p>Example – allow REST methods like the WAF does:<br><code>SecAction "id:900200,phase:1,pass,nolog,setvar:'tx.allowed_methods=GET HEAD POST OPTIONS PUT PATCH DELETE'"</code></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14. FAQ -->
+<section class="section">
+  <h2><span class="num">14</span>FAQ &amp; troubleshooting</h2>
+  <table>
+    <tr><th style="width:36%">Question</th><th>Answer</th></tr>
+    <tr><td>The OWASP CRS tab is missing.</td><td>Check the extension is enabled on <code>chrome://extensions</code>, then close and reopen DevTools. Look behind the <b>»</b> overflow in the tab bar.</td></tr>
+    <tr><td>The list stays empty.</td><td>Reload the page with DevTools open; check the record button is red. Requests made before DevTools was opened are not captured.</td></tr>
+    <tr><td>Images and scripts are listed too.</td><td>Yes – the WAF inspects every request (cookies and query strings of images can trigger rules). Use the type filters (<i>Fetch/XHR</i>, <i>Doc</i> …) to focus.</td></tr>
+    <tr><td>Our WAF did not block a request the extension marks as blocked (or vice versa).</td><td>See section 10: Detection mode, Front Door tier, policy association, disabled rules and DRS differences. Rule ids and the <i>Log data</i> line help to match WAF logs.</td></tr>
+    <tr><td>DELETE / PUT / PATCH are blocked (911100).</td><td>CRS only allows GET, HEAD, POST, OPTIONS by default. Most API deployments extend <code>tx.allowed_methods</code> – add the setting shown in section 13. On Azure, see sections 10–11.</td></tr>
+    <tr><td>Large uploads / bodies are blocked (ENGINE 413).</td><td>ModSecurity rejects bodies above 128&nbsp;KB (without files) by default. Your WAF may use a different limit.</td></tr>
+    <tr><td>“Rule 955100: data file not available”.</td><td>Windows Defender removed a CRS signature file for web-shell detection in responses. Only that response rule is affected; request analysis is complete.</td></tr>
+    <tr><td>Is any data sent to a server?</td><td>No. Rules and analysis run entirely inside the extension.</td></tr>
+  </table>
+  <h3>Glossary</h3>
+  <table>
+    <tr><td style="width:30%"><b>CRS</b></td><td>OWASP Core Rule Set – the generic attack-detection rules used by ModSecurity, Coraza and many cloud WAFs.</td></tr>
+    <tr><td><b>Anomaly score</b></td><td>Points accumulated by matching rules; compared with the threshold at the end of the request.</td></tr>
+    <tr><td><b>Paranoia level (PL)</b></td><td>How strict CRS is (1–4). Higher = more rules, more false positives.</td></tr>
+    <tr><td><b>False positive</b></td><td>A legitimate request that triggers a rule.</td></tr>
+    <tr><td><b>Exclusion</b></td><td>WAF configuration that stops a rule from inspecting a specific variable or endpoint.</td></tr>
+    <tr><td><b>ARGS / REQUEST_COOKIES / REQUEST_HEADERS</b></td><td>ModSecurity names for query/body parameters (JSON fields as <code>json.field</code>), cookies and headers.</td></tr>
+  </table>
+</section>
+
+</body>
+</html>

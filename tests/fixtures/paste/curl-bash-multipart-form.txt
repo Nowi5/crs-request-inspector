@@ -1,0 +1,8 @@
+# Hand-written curl with multipart form fields (-F) and basic auth
+curl -sS -u 'tester:s3cret-test' \
+  -A 'curl-fixture/1.0' \
+  -F 'title=Quarterly report' \
+  -F 'summary=Revenue up;type=text/markdown' \
+  -F 'file=@./reports/q3 summary.pdf;type=application/pdf' \
+  --form-string 'comment=<script>alert(1)</script>' \
+  https://upload.example.com/api/v2/files

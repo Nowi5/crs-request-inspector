@@ -1,0 +1,36 @@
+curl ^"https://dev.example.com/api/v1/workspace-options^" ^
+  -H ^"accept: */*^" ^
+  -H ^"accept-language: en-SG,en;q=0.9,de-DE;q=0.8,de;q=0.7,en-US;q=0.6,zh-CN;q=0.5,zh;q=0.4^" ^
+  -H ^"cache-control: no-cache^" ^
+  -b ^"AppServiceAuthSession=cjky+ZV4b2KyZjwmsRIuCPOLNEPOCPOLNEPO/aE7+eMJvWmwtgiaES/J0Cn+r+4RPDcsTwXRjkwSs2maLamcYuuEShOKB8BpEm==; app_session=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0LXVzZXIiLCJyb2xlIjoiYWRtaW4ifQ.c2lnbmF0dXJlLXJlZGFjdGVkLWZvci10ZXN0cw; app_csrf=rvqs8QY0fdXWv8qPmqIdwB.4e0823d35aa61ac819ee1bfb708d03335efe856b1bad53806489fb06af5fd6a7^" ^
+  -H ^"dnt: 1^" ^
+  -H ^"pragma: no-cache^" ^
+  -H ^"priority: u=1, i^" ^
+  -H ^"referer: https://dev.example.com/docs/5d2c6e1a-3b7f-4c9e-9a41-2f8b7c0d1e63^" ^
+  -H ^"sec-ch-ua: ^\^"Chromium^\^";v=^\^"154^\^", ^\^"Google Chrome^\^";v=^\^"154^\^", ^\^"Not A(Brand^\^";v=^\^"99^\^"^" ^
+  -H ^"sec-ch-ua-mobile: ?0^" ^
+  -H ^"sec-ch-ua-platform: ^\^"Windows^\^"^" ^
+  -H ^"sec-fetch-dest: empty^" ^
+  -H ^"sec-fetch-mode: cors^" ^
+  -H ^"sec-fetch-site: same-origin^" ^
+  -H ^"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36^" ^
+  --compressed &
+curl ^"https://dev.example.com/api/v1/docs/folders/5d2c6e1a-3b7f-4c9e-9a41-2f8b7c0d1e63/comments^" ^
+  -H ^"accept: */*^" ^
+  -H ^"accept-language: en-SG,en;q=0.9,de-DE;q=0.8,de;q=0.7,en-US;q=0.6,zh-CN;q=0.5,zh;q=0.4^" ^
+  -H ^"content-type: application/json^" ^
+  -b ^"AppServiceAuthSession=cjky+ZV4b2KyZjwmsRIuCPOLNEPOCPOLNEPO/aE7+eMJvWmwtgiaES/J0Cn+r+4RPDcsTwXRjkwSs2maLamcYuuEShOKB8BpEm==; app_csrf=rvqs8QY0fdXWv8qPmqIdwB.4e0823d35aa61ac819ee1bfb708d03335efe856b1bad53806489fb06af5fd6a7; app_session=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0LXVzZXIiLCJyb2xlIjoiYWRtaW4ifQ.c2lnbmF0dXJlLXJlZGFjdGVkLWZvci10ZXN0cw^" ^
+  -H ^"dnt: 1^" ^
+  -H ^"origin: https://dev.example.com^" ^
+  -H ^"priority: u=1, i^" ^
+  -H ^"referer: https://dev.example.com/docs/5d2c6e1a-3b7f-4c9e-9a41-2f8b7c0d1e63^" ^
+  -H ^"sec-ch-ua: ^\^"Chromium^\^";v=^\^"154^\^", ^\^"Google Chrome^\^";v=^\^"154^\^", ^\^"Not A(Brand^\^";v=^\^"99^\^"^" ^
+  -H ^"sec-ch-ua-mobile: ?0^" ^
+  -H ^"sec-ch-ua-platform: ^\^"Windows^\^"^" ^
+  -H ^"sec-fetch-dest: empty^" ^
+  -H ^"sec-fetch-mode: cors^" ^
+  -H ^"sec-fetch-site: same-origin^" ^
+  -H ^"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36^" ^
+  -H ^"x-csrf-token: rvqs8QY0fdXWv8qPmqIdwB.4e0823d35aa61ac819ee1bfb708d03335efe856b1bad53806489fb06af5fd6a7^" ^
+  --data-raw ^"^{^\^"content^\^":^\^"enc:hex1:48656c6c6f^\^",^\^"resourceItems^\^":^[^],^\^"linkedResourceItemIds^\^":^[^],^\^"sourceLinks^\^":^[^]^}^" ^
+  --compressed

@@ -1,0 +1,41 @@
+{
+  "name": "crs-request-inspector",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chrome DevTools extension that checks every request against the OWASP Core Rule Set (ModSecurity/Coraza) or your Azure WAF policy and explains which rule would block it, where and why.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "keywords": [
+    "owasp",
+    "crs",
+    "coreruleset",
+    "modsecurity",
+    "coraza",
+    "waf",
+    "azure-waf",
+    "front-door",
+    "chrome-extension",
+    "devtools",
+    "security",
+    "false-positives"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nowi5/crs-request-inspector.git"
+  },
+  "scripts": {
+    "test": "node scripts/check-regexes.mjs && node scripts/test-engine.mjs && node scripts/test-libinjection.mjs && node scripts/test-parsers.mjs && node scripts/test-e2e.mjs && node scripts/test-ui-logic.mjs && node scripts/test-recommendations.mjs && node scripts/test-azure.mjs",
+    "test:crs": "node scripts/run-crs-tests.mjs v4.30.0",
+    "test:smoke": "node scripts/smoke-devtools.mjs",
+    "fetch-crs": "node scripts/fetch-crs.mjs",
+    "package": "node scripts/package-extension.mjs",
+    "serve": "node scripts/serve.mjs 5178",
+    "screenshots": "node scripts/docs/gen-demo-data.mjs && node scripts/docs/capture-readme-screens.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

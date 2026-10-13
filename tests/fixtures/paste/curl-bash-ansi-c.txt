@@ -1,0 +1,8 @@
+curl 'https://shop.example.com/api/reviews?filter\[status\]=open&sort=\{date\}' \
+  -X 'PUT' \
+  -H 'accept: application/json' \
+  -H 'content-type: application/json' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36' \
+  -H 'x-empty;' \
+  --data-raw $'{"comment":"It\'s great\u0021\nThanks\u0009Café \\o/"}' \
+  --compressed

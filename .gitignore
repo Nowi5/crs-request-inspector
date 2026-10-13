@@ -1,0 +1,15 @@
+# dependencies / build output
+node_modules/
+dist/
+
+# downloaded sources and test data (re-create with the scripts, see README → Development)
+vendor/
+
+# local tooling
+.claude/
+*.log
+.DS_Store
+Thumbs.db
+
+# temporary files of the screenshot scripts
+docs/guide/img/devtools-source.*
